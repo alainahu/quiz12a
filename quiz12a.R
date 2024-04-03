@@ -80,7 +80,7 @@ model <-
   stan_glm(
     deaths ~ age_group,
     data = simulated_data_sorted,
-    family = poisson(link = "log"),
+    family = neg_binomial_2(link = "log"),
     prior = normal(location = 0, scale = 2.5, autoscale = TRUE),
     prior_intercept = normal(location = 0, scale = 2.5, autoscale = TRUE),
     seed = 853
@@ -91,11 +91,3 @@ saveRDS(
   file = "model.rds"
 )
 
-library(modelsummary)
-modelsummary::modelsummary(
-  list(
-    "Poisson" = model
-  ),
-  statistic = "conf.int",
-  fmt = 2
-)
